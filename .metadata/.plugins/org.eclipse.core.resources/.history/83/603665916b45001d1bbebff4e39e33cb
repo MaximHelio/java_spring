@@ -1,0 +1,19 @@
+package chap01;
+
+public class exam01 {
+
+	// 프로그램의 시작
+	public static void main(String[] args) {
+		
+		// 기본 자료형 (8개)
+		boolean b = false;
+		char ch = 'A';
+		byte Byte = 100;
+		short Short = 500;
+		int Int = 2100000;
+		long Long = 2100000000L;
+		float Float = 12.34F;
+		double Double = 1234.5678;
+		
+	}
+}

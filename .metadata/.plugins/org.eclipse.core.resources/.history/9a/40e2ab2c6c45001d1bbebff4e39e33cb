@@ -1,0 +1,28 @@
+package chap01;
+
+public class exam01 {
+
+	// 프로그램의 시작
+	public static void main(String[] args) {
+		
+		// 기본 자료형 (8개)
+		boolean b = false;
+		char ch = 'A';
+		byte Byte = 100;
+		short Short = 500;
+		int Int = 2100000;
+		long Long = 2100000000L; // long은 리터럴이 붙어야 변수가 들어감.
+		float Float = 12.34F;	 // float은 리터럴이 붙어야 변수가 들어감.
+		double Double = 1234.5678; // 실수 쓸 때는 double 많이 씀
+		
+		// sysout : ctrl + space
+		// 한줄복사: ctrl + alt + 방향키 
+		System.out.println("b: " + b);
+		System.out.println("ch: " + b);
+		System.out.println("Byte: " + b);
+		System.out.println("b: " + b);
+		System.out.println("b: " + b);
+		System.out.println("b: " + b);
+		
+	}
+}
