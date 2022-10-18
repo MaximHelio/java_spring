@@ -340,7 +340,7 @@ example of such a key value (for example, &lt;code&gt;/user/user1234&lt;/code&gt
 &lt;div class="ulist"&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;p&gt;Since we have Micrometer Tracing on the classpath, the logs are automatically correlated (that is, they contain a unique trace identifier). Now we need to ship the logs. For this demo, we ship them to &lt;a href="https://grafana.com/oss/loki/"&gt;Grafana Loki&lt;/a&gt;. We can achieve that by adding the &lt;code&gt;com.github.loki4j:loki-logback-appender:latest.release&lt;/code&gt; dependency.&lt;/p&gt;
+&lt;p&gt;Since we have Micrometer Tracing on the classpath, the logs are automatically correlated (that is, they contain a unique trace identifier). Now we need to ship the logs. For this demo, we ship them to &lt;a href="https://grafana.com/oss/loki/"&gt;Grafana Loki&lt;/a&gt;. We can achieve that by adding the &lt;code&gt;com.github.loki4j:loki-logback-appender&lt;/code&gt; dependency (check &lt;a href="https://search.maven.org/artifact/com.github.loki4j/loki-logback-appender"&gt;this link&lt;/a&gt; for the latest release version)&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
@@ -540,7 +540,7 @@ class MyConfiguration {
     // You must set this manually until this is registered in Boot
     @Bean
     FilterRegistrationBean observationWebFilter(ObservationRegistry observationRegistry) {
-        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean(new HttpRequestsObservationFilter(observationRegistry));
+        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean(new ServerHttpObservationFilter(observationRegistry));
         filterRegistrationBean.setDispatcherTypes(DispatcherType.ASYNC, DispatcherType.ERROR, DispatcherType.FORWARD,
                 DispatcherType.INCLUDE, DispatcherType.REQUEST);
         filterRegistrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE);
@@ -595,7 +595,7 @@ class MyConfiguration {
 &lt;div class="ulist"&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;p&gt;As previously, we add the &lt;code&gt;com.github.loki4j:loki-logback-appender:latest.release&lt;/code&gt; dependency to ship logs to Loki.&lt;/p&gt;
+&lt;p&gt;As previously, we add the &lt;code&gt;com.github.loki4j:loki-logback-appender&lt;/code&gt; dependency (check &lt;a href="https://search.maven.org/artifact/com.github.loki4j/loki-logback-appender"&gt;this link&lt;/a&gt; for the latest release version) to ship logs to Loki.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;

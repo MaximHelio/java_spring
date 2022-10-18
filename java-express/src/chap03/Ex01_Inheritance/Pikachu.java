@@ -32,5 +32,10 @@ public class Pikachu {
 	public String bAttack() {
 		return "Àü±¤¼®È­";
 	}
+
+	@Override
+	public String toString() {
+		return "Pikachu [energy=" + energy + ", type=" + type + "]";
+	}
 	
 }
