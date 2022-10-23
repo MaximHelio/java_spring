@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
     <fullyQualifiedTypeName name="java.lang.System"/>
+    <fullyQualifiedTypeName name="chap03.Ex01_Inheritance.Pikachu"/>
+    <fullyQualifiedTypeName name="chap03.Ex05_StaticMember.SingleTone"/>
+    <fullyQualifiedTypeName name="chap03.Ex06_01_AccessModifier.Person"/>
+    <fullyQualifiedTypeName name="chap03.Ex07_UpDownCasting.Person"/>
+    <fullyQualifiedTypeName name="chap03.Ex10_DynamicBinding.Subobject"/>
+    <fullyQualifiedTypeName name="chap03.Ex09_Interface.GalaxyPhone"/>
+    <fullyQualifiedTypeName name="java.sql.Connection"/>
+    <fullyQualifiedTypeName name="java.sql.Statement"/>
+    <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
+    <fullyQualifiedTypeName name="java.sql.ResultSet"/>
+    <fullyQualifiedTypeName name="java.sql.DriverManager"/>
+    <fullyQualifiedTypeName name="java.util.Date"/>
+    <fullyQualifiedTypeName name="JDBC.JDBConnection"/>
+    <fullyQualifiedTypeName name="JDBC.Board.DTO.Board"/>
+    <fullyQualifiedTypeName name="JDBC.Board.DAO.BoardDAO"/>
     <fullyQualifiedTypeName name="java.util.Scanner"/>
 </qualifiedTypeNameHistroy>

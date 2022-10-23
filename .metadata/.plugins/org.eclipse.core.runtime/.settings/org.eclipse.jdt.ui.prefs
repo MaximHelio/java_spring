@@ -1,4 +1,4 @@
-content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="java.util.Iterator"><rhs name\="java.util.Scanner"/></lhs><lhs name\="java.io.Closeable"><rhs name\="java.util.Scanner"/></lhs><lhs name\="java.lang.AutoCloseable"><rhs name\="java.util.Scanner"/></lhs></history>
+content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="java.util.Iterator"><rhs name\="java.util.Scanner"/></lhs><lhs name\="java.io.Closeable"><rhs name\="java.util.Scanner"/></lhs><lhs name\="java.lang.AutoCloseable"><rhs name\="java.util.Scanner"/></lhs><lhs name\="chap03.Ex05_StaticMember.SingleTone"><rhs name\="chap03.Ex05_StaticMember.SingleTone"/></lhs><lhs name\="chap03.Ex09_Interface.PhoneInterface"><rhs name\="chap03.Ex09_Interface.GalaxyPhone"/></lhs><lhs name\="chap03.Ex09_Interface.GalaxyPhone"><rhs name\="chap03.Ex09_Interface.GalaxyPhone"/></lhs></history>
 content_assist_number_of_computers=19
 content_assist_proposals_background=255,255,255
 content_assist_proposals_foreground=0,0,0
