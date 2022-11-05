@@ -41,7 +41,7 @@ public class ArraysEx {
 //		
 //	} 
 	
-	public static void main(String[] args) {
+	public static void main(StringTest[] args) {
 		int [] arr = {5, 3, 4, 1, 2};
 		
 		// 배열을 정렬(sort)

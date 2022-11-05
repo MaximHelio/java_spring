@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class MathEx {
 
-	public static void main(String[] args) {
+	public static void main(StringTest[] args) {
 
 		System.out.println(Math.PI);			//3.141592653589793(원주율)
 		System.out.println(Math.ceil(3.125));	// 올림
@@ -23,7 +23,6 @@ public class MathEx {
 		// (( 0.xxx ~0.999 ) * 45) + 1		: 1.xxx ~ 45.xxx
 		// (Math.random() * 45) + 1			: 1.xxx ~ 45.xxx
 		// (int) ((Math.random() * 45) + 1) : 1 ~ 45
-		// 공식 - a ~ b 사이의 랜덤수
 		// (int) ((Math.random() * [개수] + [시작숫자]))
 		System.out.println("이번주 행운의 번호는");
 		for (int i = 0; i < 6; i++) {
