@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ea14120c-393f-4656-861b-4c40d7eb5f2c" name="Default Changelist" comment="" />
+    <list default="true" id="ea14120c-393f-4656-861b-4c40d7eb5f2c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/1/src/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/10171/src/Cat.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/10172/src/Dog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/1330/src/Compar1.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/14681/src/Sabunmyeon.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/25083/src/Saessak.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/2573/src/Yoonnyeon.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/2588/src/Multiply.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/2884/src/Alarm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/3/src/Pro.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/9498/src/Test.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Connection/src/Connection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Cote/src/Cote.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Geometric/src/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Solution/src/Solution.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

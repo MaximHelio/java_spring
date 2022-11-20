@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/1/1.iml" filepath="$PROJECT_DIR$/1/1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/10171/10171.iml" filepath="$PROJECT_DIR$/10171/10171.iml" />
+      <module fileurl="file://$PROJECT_DIR$/10172/10172.iml" filepath="$PROJECT_DIR$/10172/10172.iml" />
+      <module fileurl="file://$PROJECT_DIR$/1330/1330.iml" filepath="$PROJECT_DIR$/1330/1330.iml" />
+      <module fileurl="file://$PROJECT_DIR$/14681/14681.iml" filepath="$PROJECT_DIR$/14681/14681.iml" />
+      <module fileurl="file://$PROJECT_DIR$/2480/2480.iml" filepath="$PROJECT_DIR$/2480/2480.iml" />
+      <module fileurl="file://$PROJECT_DIR$/25083/25083.iml" filepath="$PROJECT_DIR$/25083/25083.iml" />
+      <module fileurl="file://$PROJECT_DIR$/2573/2573.iml" filepath="$PROJECT_DIR$/2573/2573.iml" />
+      <module fileurl="file://$PROJECT_DIR$/2588/2588.iml" filepath="$PROJECT_DIR$/2588/2588.iml" />
+      <module fileurl="file://$PROJECT_DIR$/2884/2884.iml" filepath="$PROJECT_DIR$/2884/2884.iml" />
+      <module fileurl="file://$PROJECT_DIR$/3/3.iml" filepath="$PROJECT_DIR$/3/3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/9498/9498.iml" filepath="$PROJECT_DIR$/9498/9498.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Babbling/Babbling.iml" filepath="$PROJECT_DIR$/Babbling/Babbling.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Connection/Connection.iml" filepath="$PROJECT_DIR$/Connection/Connection.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Cote/Cote.iml" filepath="$PROJECT_DIR$/Cote/Cote.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Solution/Solution.iml" filepath="$PROJECT_DIR$/Solution/Solution.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/코테공부.iml" filepath="$PROJECT_DIR$/.idea/코테공부.iml" />
+    </modules>
+  </component>
+</project>
