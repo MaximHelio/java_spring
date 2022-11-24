@@ -1,0 +1,17 @@
+게시글 글읽기
+
+1. #Controller
+	1-1 GET		/board/read	글 읽기
+
+2. #Service
+	2-1	public Board read(Integer boardNo);
+
+3. #Mapper
+	3-1	public Board read(Integer boardNo);
+	3-2	SELECT *
+		FROM board
+		WHERE board_no = #{boardNo}
+
+4. html
+	4-1	read.html
+

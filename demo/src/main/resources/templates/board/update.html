@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>게시글 수정</title>
+    <script src="/js/jquery-3.6.1.min.js"></script>
+    <script>
+        $(function() {
+            let form = $('#board')
+            // 수정 버튼 클릭 이벤트
+            $('#btnUpdate').on('click', function(){
+                form.attr('action', '/board/update')
+                form.submit()
+            })
+            // 삭제 버튼 클릭 이벤트
+            $('#btnDelete').on('click', function(){
+                form.submit()
+            })
+            // 목록 버튼 클릭 이벤트
+            $('#btnList').on('click', function(){
+
+                self.location = "/board/list"
+            })
+        })
+    </script>
+</head>
+<body>
+<h2>글수정</h2>
+<form action="/board/delete" method="post" id="board">
+    <input text="hidden" th:value="${board.boardNo}" id="boardNo" name="boardNo">
+    <table>
+        <tr>
+            <td>제목</td>
+            <td><input type="text" name="title" th:value="${board.title}"></td>
+        </tr>
+        <tr>
+            <td>작성자</td>
+            <td><input type="text" name="writer" th:value="${board.writer}"></td>
+        </tr>
+        <tr>
+            <td>내용</td>
+            <td>
+                <textarea name="content" cols="80" rows="20" th:text="${board.content}"></textarea>
+            </td>
+        </tr>
+    </table>
+    <!--        type="submit"을 form태그 안에서 작성해 놓으면 제출이 실제로 됨-->
+</form>
+
+<div>
+    <button type="submit" id="btnUpdate">수정</button>
+    <button type="submit" id="btnDelete">삭제</button>
+    <button type="button" id="btnList">목록</button>
+</div>
+</body>
+</html>

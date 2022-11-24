@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>게시글 쓰기</title>
+    <script src="/js/jquery-3.6.1.min.js"></script>
+    <script>
+        $(function() {
+            let form = $('#board')
+            // 등록 버튼 클릭 이벤트
+            $('#btnInsert').on('click', function(){
+
+                form.submit()
+            })
+            // 목록 버튼 클릭 이벤트
+            $('#btnList').on('click', function(){
+
+                self.location = "/board/list"
+            })
+        })
+    </script>
+</head>
+<body>
+    <h2>글쓰기</h2>
+    <form action="/board/insert" method="post" id="board">
+        <table>
+            <tr>
+                <td>제목</td>
+                <td><input type="text" name="title"></td>
+            </tr>
+            <tr>
+                <td>작성자</td>
+                <td><input type="text" name="writer"></td>
+            </tr>
+            <tr>
+                <td>내용</td>
+                <td>
+                    <textarea name="content" cols="80" rows="20"></textarea>
+                </td>
+            </tr>
+        </table>
+<!--        type="submit"을 form태그 안에서 작성해 놓으면 제출이 실제로 됨-->
+        <button type="submit" id="btnInsert">등록</button>
+    </form>
+
+    <div>
+        <button type="button" id="btnList">목록</button>
+    </div>
+</body>
+</html>

@@ -5,13 +5,10 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Doc</title>
+    <title>글쓰기 성공 페이지</title>
 </head>
 <body>
-    <h1>Home</h1>
-    <a href="/board/list" th:href="@{/board/list}">게시판</a>
-
-    <h3 th:text="${welcome}"></h3>
-
+    <h2 th:text="${msg}"></h2>
+    <a href="/board/list">목록</a>
 </body>
 </html>

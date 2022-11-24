@@ -1,0 +1,19 @@
+게시글 글삭제
+
+1. #Controller
+	1-1 POST	/board/delete	글쓰기 삭제 처리
+
+2. #Service
+	2-1	public void delete(Integer boardNo);
+
+
+3. #Mapper
+	3-1	public void delete(Integer boardNo);
+	3-2	DELETE
+		FROM board
+		WHERE board_no = ${boardNo}
+
+
+4. html
+	4-1	success.html
+

@@ -9,7 +9,7 @@ public class Board {
     private String content;
     private String writer;
     private LocalDateTime regDate;
-    private LocalDateTime updDtae;
+    private LocalDateTime updDate;
     private int view;
 
     public int getBoardNo() {
@@ -52,12 +52,12 @@ public class Board {
         this.regDate = regDate;
     }
 
-    public LocalDateTime getUpdDtae() {
-        return updDtae;
+    public LocalDateTime getUpdDate() {
+        return updDate;
     }
 
-    public void setUpdDtae(LocalDateTime updDtae) {
-        this.updDtae = updDtae;
+    public void setUpdDate(LocalDateTime updDate) {
+        this.updDate = updDate;
     }
 
     public int getView() {
@@ -77,7 +77,7 @@ public class Board {
                 ", content='" + content + '\'' +
                 ", writer='" + writer + '\'' +
                 ", regDate=" + regDate +
-                ", updDtae=" + updDtae +
+                ", updDate=" + updDate +
                 ", view=" + view +
                 '}';
     }

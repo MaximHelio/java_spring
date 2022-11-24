@@ -1,0 +1,17 @@
+게시글 글쓰기
+
+1. #Controller
+	1-1 GET		/board/insert		글쓰기 화면
+	1-2 POST		/board/insert 		글쓰기 처리
+
+2. #Service
+	2-1	public void insert(Board board);
+
+3. #Mapper
+	3-1	public void insert(Board board);
+	3-2	INSERT INTO board ( title, content, writer )
+			VALUES ( #{title}, #{content}, #{writer} )
+
+4. html
+	4-1	insert.html
+	4-2	success.html

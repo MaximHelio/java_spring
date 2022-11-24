@@ -5,12 +5,35 @@
 <mapper namespace="aloha.mapper.BoardMapper">
 
     <!-- 게시글 목록-->
-<!--  id값이 BoardMapper에 적은 메서드와 같은 걸 매핑  -->
+    <!-- id값이 BoardMapper에 적은 메서드와 같은 걸 매핑  -->
     <select id="list" resultType="Board">
         SELECT *
         FROM board
         ORDER BY board_no DESC
     </select>
-
-
+    <!-- 게시글 쓰기 -->
+    <insert id="insert">
+        INSERT INTO board ( title, writer, content )
+        <!-- getter/setter가 있어야 매핑이 됨-->
+        VALUES ( #{title}, #{writer}, #{content} )
+    </insert>
+    <!--게시글 읽기-->
+    <select id="read" resultType="Board">
+        SELECT *
+        FROM board
+        WHERE board_no = #{boardNo}
+    </select>
+    <!--게시글 수정 -->
+    <update id="update">
+        UPDATE board
+        SET title = #{title}
+            ,writer = #{writer}
+            ,content = #{content}
+        WHERE board_no = #{boardNo}
+    </update>
+    <!--게시글 삭제-->
+    <delete id="delete">
+        DELETE FROM board
+        WHERE board_no = #{boardNo}
+    </delete>
 </mapper>

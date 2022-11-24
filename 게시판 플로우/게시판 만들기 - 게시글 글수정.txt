@@ -1,0 +1,28 @@
+게시글 글수정
+
+1. #Controller
+	1-1 GET		/board/update	글쓰기 수정 화면
+	1-2 POST	/board/update	글쓰기 수정 처리
+
+2. #Service
+	2-1	public Board read(Integer boardNo);
+	2-2	public void update(Board board);
+
+3. #Mapper
+	3-1	public Board read(Integer boardNo);
+	3-2	SELECT *
+		FROM board
+		WHERE board_no = ${boardNo}
+
+	3-3	public void update(Board board);
+	3-4	UPDATE board
+		SET title = #{title},
+		    content = #{content},
+		    writer = #{writer}
+		WHERE board_no = #{boardNo}
+		
+
+4. html
+	4-1	update.html
+	4-2	success.html
+
