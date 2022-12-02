@@ -1,6 +1,7 @@
 package aloha.service;
 
 import aloha.domain.Board;
+import aloha.domain.Option;
 
 import java.util.List;
 
@@ -9,6 +10,7 @@ public interface BoardService {
 
     // 게시글 목록
     public List<Board> list() throws Exception;
+    public List<Board> list(Option option) throws Exception;
 
     // 게시글 쓰기
     public int insert(Board board) throws Exception;

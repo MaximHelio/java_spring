@@ -1,6 +1,7 @@
 package aloha.service;
 
 import aloha.domain.Board;
+import aloha.domain.Option;
 import aloha.mapper.BoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,11 @@ public class BoardServiceImpl implements BoardService{
     @Override
     public List<Board> list() throws Exception {
         return mapper.list(); // throws Exception이니 또 떠넘김
+    }
+
+    @Override
+    public List<Board> list(Option option) throws Exception {
+        return mapper.search(option);
     }
 
     @Override

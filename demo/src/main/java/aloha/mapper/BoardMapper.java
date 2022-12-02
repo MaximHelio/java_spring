@@ -1,6 +1,7 @@
 package aloha.mapper;
 
 import aloha.domain.Board;
+import aloha.domain.Option;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -25,4 +26,7 @@ public interface BoardMapper {
 
     // 게시글 삭제
     public int delete(int boardNo) throws Exception;
+
+    // 게시글 검색
+    public List<Board> search(Option option) throws Exception;
 }

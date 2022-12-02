@@ -1,6 +1,7 @@
 package aloha.controller;
 
 import aloha.domain.Board;
+import aloha.domain.Option;
 import aloha.service.BoardService;
 import lombok.extern.slf4j.Slf4j;
 import lombok.extern.slf4j.XSlf4j;
@@ -20,10 +21,12 @@ public class BoardController {
     private BoardService service;
 
     // 게시글 목록
-    @RequestMapping(value = "/board/list", method= RequestMethod.GET)
+    // @RequestMapping(value = "/board/list", method= RequestMethod.GET)
     @GetMapping("/board/list")
-    public String list(Model model) throws Exception{
-        List<Board> list = service.list();
+    public String list(Model model, Option option) throws Exception{
+        log.info("keyword:" + option.getKeyword());
+        log.info("option:" + option.getOptionCode());
+        List<Board> list = service.list(option);
 
         // 모델에 데이터 등록
         model.addAttribute("list", list);
