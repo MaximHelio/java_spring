@@ -1,7 +1,9 @@
 package aloha.controller;
 
 import aloha.domain.Board;
+import aloha.domain.BoardDTO;
 import aloha.domain.Option;
+import aloha.domain.Page;
 import aloha.service.BoardService;
 import lombok.extern.slf4j.Slf4j;
 import lombok.extern.slf4j.XSlf4j;
@@ -23,15 +25,20 @@ public class BoardController {
     // 게시글 목록
     // @RequestMapping(value = "/board/list", method= RequestMethod.GET)
     @GetMapping("/board/list")
-    public String list(Model model, Option option) throws Exception{
+    public String list(Model model, Option option, Page page) throws Exception{
         log.info("keyword:" + option.getKeyword());
         log.info("option:" + option.getOptionCode());
-        List<Board> list = service.list(option);
+
+        BoardDTO boardDTO = service.list(page);
+        List<Board> list = boardDTO.getBoardList();
+        page = boardDTO.getPage();
+//        page = new Page(25,300);
 
         // 모델에 데이터 등록
         model.addAttribute("list", list);
+        model.addAttribute("page", page);
 
-        // thymeleaf 엔진을 쓰면 응답할 VIEW 파일을 지정해줄 수 있음
+        // thymeleaf 엔진을 쓰면 응답할 VIEW 파일 경로를 지정해줄 수 있음
         return "board/list";
     }
 

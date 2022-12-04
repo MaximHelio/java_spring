@@ -2,6 +2,7 @@ package aloha.mapper;
 
 import aloha.domain.Board;
 import aloha.domain.Option;
+import aloha.domain.Page;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -29,4 +30,11 @@ public interface BoardMapper {
 
     // 게시글 검색
     public List<Board> search(Option option) throws Exception;
+
+    // 게시글 페이징
+    public List<Board> page(Page page) throws Exception;
+
+    // 전체 게시글 수
+    public int count() throws Exception;    // id=count인 sql을 가져옴
+
 }

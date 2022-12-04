@@ -1,13 +1,17 @@
 package aloha.service;
 
 import aloha.domain.Board;
+import aloha.domain.BoardDTO;
 import aloha.domain.Option;
+import aloha.domain.Page;
 import aloha.mapper.BoardMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class BoardServiceImpl implements BoardService{
 
@@ -29,6 +33,28 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
+    public BoardDTO list(Page page) throws Exception {
+
+        int totalCount = mapper.count();
+        log.info("total: "+ totalCount);
+        int pageNum = page.getPageNum();
+        int rowsPerPage = page.getRowsPerPage();
+        int pageCount = page.getPageCount();
+
+        page = new Page(pageNum, rowsPerPage, pageCount, totalCount);
+//        page = new Page(pageNum, rowsPerPage, pageCount, totalCount);
+
+        page.setTotalCount(totalCount);
+
+        List<Board> boardList = mapper.page(page);
+        BoardDTO boardDTO = new BoardDTO();
+        boardDTO.setBoardList(boardList);
+        boardDTO.setPage(page);
+
+        return boardDTO;
+    }
+
+    @Override
     public int insert(Board board) throws Exception {
 
         return mapper.insert(board);
@@ -47,5 +73,10 @@ public class BoardServiceImpl implements BoardService{
     @Override
     public int delete(int boardNo) throws Exception {
         return mapper.delete(boardNo);
+    }
+
+    @Override
+    public int count() throws Exception {
+        return mapper.count();
     }
 }

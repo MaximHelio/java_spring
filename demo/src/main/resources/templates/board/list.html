@@ -124,6 +124,45 @@
                 <td align="center" th:text="${#temporals.format(board.updDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
             </tr>
         </table>
+<!--        페이지네이션-->
+        <th:block th:if="${page == null or page.pageNum != 0}"}>
+            <div class="d-flex justify-content-center py-5">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" th:href="|/board/list?pageNum=${page.firstPage}|" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" th:href="|/board/list?pageNum=${page.prev}|" aria-label="Previous">
+                                <span aria-hidden="true">&lsaquo;</span>
+                            </a>
+                        </li>
+                        <th:block th:each="no : ${#numbers.sequence( page.startPage, page.endPage )}">
+                            <li class="page-item">
+                                <th:block th:if="${no == page.pageNum}">
+                                    <a class="page-link active" href="#" th:text="${no}"></a>
+                                </th:block>
+                                <th:block th:if="${no != page.pageNum}">
+                                    <a class="page-link" th:href="|/board/list?pageNum=${no}|" th:text="${no}"></a>
+                                </th:block>
+                            </li>
+                        </th:block>
+                        <li class="page-item">
+                            <a class="page-link" th:href="|/board/list?pageNum=${page.next}|" aria-label="Next">
+                                <span aria-hidden="true">&rsaquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" th:href="|/board/list?pageNum=${page.lastPage}|" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </th:block>
     </div>
     <script src="/js/jquery-3.6.1.min.js"></script>
     <script src="/bootstrap/js/bootstrap.bundle.js"></script>
@@ -131,7 +170,6 @@
         let optionCode = "[[${param.optionCode}]]"
         optionCode = (optionCode == '' ? 0 : optionCode)
         $(function(){
-
 
             $('#search-option').val(optionCode).attr('selected', 'selected')
         })
