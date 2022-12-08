@@ -35,7 +35,8 @@ public class BoardServiceImpl implements BoardService{
     @Override
     public BoardDTO list(Page page) throws Exception {
 
-        int totalCount = mapper.count();
+        int totalCount = mapper.count(); // 게시물의 전체 개수
+
         log.info("total: "+ totalCount);
         int pageNum = page.getPageNum();
         int rowsPerPage = page.getRowsPerPage();
@@ -50,6 +51,28 @@ public class BoardServiceImpl implements BoardService{
         BoardDTO boardDTO = new BoardDTO();
         boardDTO.setBoardList(boardList);
         boardDTO.setPage(page);
+
+        return boardDTO;
+    }
+
+    @Override
+    public BoardDTO list(BoardDTO boardDTO) throws Exception {
+
+        Option option = boardDTO.getOption();
+        Page page = boardDTO.getPage();
+
+        int totalCount = mapper.countWithKeyword(option);
+
+        int pageNum = page.getPageNum();
+        int rowsPerPage = page.getRowsPerPage();
+        int pageCount = page.getPageCount();
+
+        page = new Page(pageNum, rowsPerPage, pageCount, totalCount);
+
+        boardDTO.setPage(page);
+
+        List<Board> boardList = mapper.boardList(boardDTO);
+        boardDTO.setBoardList(boardList);
 
         return boardDTO;
     }

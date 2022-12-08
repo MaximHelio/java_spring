@@ -14,7 +14,7 @@ public interface BoardService {
     public List<Board> list() throws Exception;
     public List<Board> list(Option option) throws Exception; // option을 넘길 때에는 검색옵션을 같이
     public BoardDTO list(Page page) throws Exception; // page를 같이 넘길 때에는 paging을
-
+    public BoardDTO list(BoardDTO boardDTO) throws Exception;
     // 게시글 쓰기
     public int insert(Board board) throws Exception;
 
@@ -29,4 +29,5 @@ public interface BoardService {
 
     // 전체 게시글 수
     public int count() throws Exception;
+
 }

@@ -98,8 +98,36 @@
                     </div>
                 </form>
             </div>
-            <div class="col-6 d-flex justify-content-end">
-                <a href="/board/insert" class="btn btn-primary">글쓰기</a>
+
+            <div class="col-6 ">
+                <div class="row d-flex justify-content-end">
+                    <div class="col-4">
+                        <div class="input-group">
+                            <select class="form-select" id="rowsPerPage" name="rowsPerPage">
+                                <option value="5">5개씩</option>
+                                <option value="10">10개씩</option>
+                                <option value="15">15개씩</option>
+                                <option value="20">20개씩</option>
+                                <option value="30">30개씩</option>
+                                <option value="40">40개씩</option>
+                                <option value="50">50개씩</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="input-group">
+                            <select class="form-select" id="pageCount" name="pageCount">
+                                <option value="5">5 페이지씩</option>
+                                <option value="10">10 페이지씩</option>
+                                <option value="20">20 페이지씩</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-4 d-flex justify-content-end">
+                        <a href="/board/insert" class="btn btn-primary">글쓰기</a>
+                    </div>
+                </div>
+
             </div>
 
         </div>
@@ -129,33 +157,43 @@
             <div class="d-flex justify-content-center py-5">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
+                        <!--첫 페이지-->
                         <li class="page-item">
-                            <a class="page-link" th:href="|/board/list?pageNum=${page.firstPage}|" aria-label="Previous">
+                            <a class="page-link" th:href="|javascript: change(${page.firstPage});|" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
-                        <li class="page-item">
-                            <a class="page-link" th:href="|/board/list?pageNum=${page.prev}|" aria-label="Previous">
-                                <span aria-hidden="true">&lsaquo;</span>
-                            </a>
-                        </li>
+                        <!--이전 페이지-->
+                        <th:block th:if="${page.prev > 0}">
+                            <li class="page-item">
+                                <a class="page-link" th:href="|javascript: change(${page.prev});|"aria-label="Previous">
+                                    <span aria-hidden="true">&lsaquo;</span>
+                                </a>
+                            </li>
+                        </th:block>
+                        <!-- 현재 (보여지는) 페이지-->
                         <th:block th:each="no : ${#numbers.sequence( page.startPage, page.endPage )}">
                             <li class="page-item">
                                 <th:block th:if="${no == page.pageNum}">
                                     <a class="page-link active" href="#" th:text="${no}"></a>
                                 </th:block>
                                 <th:block th:if="${no != page.pageNum}">
-                                    <a class="page-link" th:href="|/board/list?pageNum=${no}|" th:text="${no}"></a>
+<!--                                    <a class="page-link" th:href="|/board/list?pageNum=${no}|" th:text="${no}"></a>-->
+                                    <a class="page-link" th:href="|javascript: change(${no});|" th:text="${no}"></a>
                                 </th:block>
                             </li>
                         </th:block>
+                        <!-- 다음페이지-->
+                        <th:block th:if="${page.next <= page.lastPage }">
+                            <li class="page-item">
+                                <a class="page-link" th:href="|javascript: change(${page.next});|" aria-label="Next">
+                                    <span aria-hidden="true">&rsaquo;</span>
+                                </a>
+                            </li>
+                        </th:block>
+                        <!-- 마지막 페이지-->
                         <li class="page-item">
-                            <a class="page-link" th:href="|/board/list?pageNum=${page.next}|" aria-label="Next">
-                                <span aria-hidden="true">&rsaquo;</span>
-                            </a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" th:href="|/board/list?pageNum=${page.lastPage}|" aria-label="Next">
+                            <a class="page-link" th:href="|javascript: change(${page.lastPage});|" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
@@ -166,13 +204,42 @@
     </div>
     <script src="/js/jquery-3.6.1.min.js"></script>
     <script src="/bootstrap/js/bootstrap.bundle.js"></script>
-    <script>
-        let optionCode = "[[${param.optionCode}]]"
-        optionCode = (optionCode == '' ? 0 : optionCode)
+    <!--타임리프에서 자바스크립트 인라인 기능-->
+    <!--객체를 자동으로 JSON으로 변환-->
+    <script th:inline="javascript">
+        let page = [[${page}]]  // controller의 page객체를 json으로 변환
+        let option = [[${option}]]
+        let optionCode = [[${param.optionCode}]]
+        optionCode = (optionCode == '' || optionCode == null ? 0 : optionCode)
         $(function(){
-
+            // 검색 옵션 동기화
             $('#search-option').val(optionCode).attr('selected', 'selected')
+
+            // rowsPerPage 초기화
+            $('#rowsPerPage option[value=' + page.rowsPerPage + "]").attr('selected', 'selected')
+
+            // pageCount 초기화
+            $('#pageCount option[value=' + page.pageCount + "]").attr('selected', 'selected')
+
+            // 줄보기 변경 이벤트
+            $('#rowsPerPage').on('change', function(){
+                page.rowsPerPage = $(this).val()
+                change()
+            })
+            // 페이지 개수 변경 이벤트
+            $('#pageCount').on('change', function(){
+                page.pageCount = $(this).val()
+                change()
+            })
         })
+        // 변경 이벤트 페이지 갱신
+        function change( pageNum=1 ){
+            location.href="/board/list?pageNum=" + pageNum
+                + "&rowsPerPage=" + page.rowsPerPage
+                + "&pageCount=" + page.pageCount
+                + "&keyword=" + option.keyword
+                + "&optionCode=" + option.optionCode
+        }
     </script>
 </body>
 </html>

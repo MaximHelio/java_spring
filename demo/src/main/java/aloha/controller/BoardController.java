@@ -5,6 +5,7 @@ import aloha.domain.BoardDTO;
 import aloha.domain.Option;
 import aloha.domain.Page;
 import aloha.service.BoardService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import lombok.extern.slf4j.XSlf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,18 +27,27 @@ public class BoardController {
     // @RequestMapping(value = "/board/list", method= RequestMethod.GET)
     @GetMapping("/board/list")
     public String list(Model model, Option option, Page page) throws Exception{
-        log.info("keyword:" + option.getKeyword());
-        log.info("option:" + option.getOptionCode());
+    //  log.info("keyword:" + boardDTO.getOption().getKeyword());
+    //  log.info("option:" + boardDTO.getOption().getOptionCode());
 
-        BoardDTO boardDTO = service.list(page);
+        BoardDTO boardDTO = new BoardDTO();
+        boardDTO.setOption(option);
+        boardDTO.setPage(page);
+
+        boardDTO = service.list(boardDTO);
         List<Board> list = boardDTO.getBoardList();
         page = boardDTO.getPage();
-//        page = new Page(25,300);
+        option = boardDTO.getOption();
+        // page = new Page(25,300);
+        // ObjectMapper objectMapper = new ObjectMapper();
+        // String pageJSON = objectMapper.writeValueAsString(page);
+        // log.info("pageJSON : " + pageJSON);
 
         // 모델에 데이터 등록
         model.addAttribute("list", list);
         model.addAttribute("page", page);
-
+        model.addAttribute("option", option);
+        //  model.addAttribute("pageJSON", pageJSON);
         // thymeleaf 엔진을 쓰면 응답할 VIEW 파일 경로를 지정해줄 수 있음
         return "board/list";
     }

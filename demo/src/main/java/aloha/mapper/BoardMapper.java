@@ -1,9 +1,11 @@
 package aloha.mapper;
 
 import aloha.domain.Board;
+import aloha.domain.BoardDTO;
 import aloha.domain.Option;
 import aloha.domain.Page;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -37,4 +39,9 @@ public interface BoardMapper {
     // 전체 게시글 수
     public int count() throws Exception;    // id=count인 sql을 가져옴
 
+    // 게시글 목록 - 검색/페이징
+    public List<Board> boardList(@Param("boardDTO") BoardDTO boardDTO) throws Exception;
+
+    // 검색어를 포함하는 게시글 수
+    public int countWithKeyword(Option option) throws Exception;
 }
