@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -65,8 +66,11 @@ public class BoardController {
 
         log.info("게시글 쓰기 처리...");
         log.info("Board: " + board);
+//        log.info("파일명: " + file.getName());
+//        log.info("오리날 파일명: " + file.getOriginalFilename());
+//        log.info("용량:" + file.getSize());
 
-        int result = service.insert(board); // 날라오는 글 행의개수
+        int result = service.insert(board); // 날라오는 글 행의 개수
 
         if( result > 0){
             log.info("글쓰기 처리 성공");

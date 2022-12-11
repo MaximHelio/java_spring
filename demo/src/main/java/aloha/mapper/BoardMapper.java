@@ -1,9 +1,6 @@
 package aloha.mapper;
 
-import aloha.domain.Board;
-import aloha.domain.BoardDTO;
-import aloha.domain.Option;
-import aloha.domain.Page;
+import aloha.domain.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -44,4 +41,7 @@ public interface BoardMapper {
 
     // 검색어를 포함하는 게시글 수
     public int countWithKeyword(Option option) throws Exception;
+
+    // 파일 업로드
+    public int uploadFile(Files uploadFile);
 }

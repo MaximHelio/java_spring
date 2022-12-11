@@ -137,4 +137,13 @@
             </if>
         )
     </select>
+    <!--파일 업로드 -->
+    <insert id="uploadFile">
+        <selectKey resultType="int" keyProperty="parentNo" order="BEFORE">
+            SELECT MAX(${parentPk}) from ${parentTable}
+--      댓글에 업로드 되는 파일 관리를 같이 하려면?
+        </selectKey>
+        INSERT INTO files( file_path, file_name, file_size, parent_table, parent_no )
+        VALUES ( #{filePath}, #{fileName}, #{fileSize}, #{parentTable}, #{parentNo})
+    </insert>
 </mapper>
