@@ -44,4 +44,7 @@ public interface BoardMapper {
 
     // 파일 업로드
     public int uploadFile(Files uploadFile);
+
+    // 파일 목록
+    public List<Files> fileList(Files files) throws Exception;
 }

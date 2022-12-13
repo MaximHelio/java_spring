@@ -1,9 +1,6 @@
 package aloha.service;
 
-import aloha.domain.Board;
-import aloha.domain.BoardDTO;
-import aloha.domain.Option;
-import aloha.domain.Page;
+import aloha.domain.*;
 
 import java.util.List;
 
@@ -29,5 +26,8 @@ public interface BoardService {
 
     // 전체 게시글 수
     public int count() throws Exception;
+
+    // 파일 목록
+    public List<Files> fileList(Files files) throws Exception;
 
 }

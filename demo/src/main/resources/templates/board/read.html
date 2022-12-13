@@ -110,6 +110,24 @@
                         <textarea name="content" cols="80" rows="20" th:text="${board.content}" readonly></textarea>
                     </td>
                 </tr>
+                <tr>
+                    <td>파일</td>
+                    <td>
+                        <ul class="list-group">
+                            <th:block th:each="file : ${fileList}">
+                                <li class="list-group-item">
+                                    <input class="" th:data="${file.fileNo}"
+                                           type="checkbox" value="" th:id="|file-no-${file.fileNo}|">
+                                    <label class="" th:for="|file-no-${file.fileNo}|">
+                                        <span th:text="${file.fileName}"></span>
+                                        <!--표현식이랑 문자열 같이 섞으려면 바| 기호 안에다 넣어야 함 -->
+                                        <a th:href="|/file/download/${file.fileNo}|">다운로드</a>
+                                    </label>
+                                </li>
+                            </th:block>
+                        </ul>
+                    </td>
+                </tr>
             </table>
             <!--        type="submit"을 form태그 안에서 작성해 놓으면 제출이 실제로 됨-->
         </form>

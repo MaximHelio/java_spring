@@ -2,6 +2,7 @@ package aloha.service;
 
 import aloha.domain.*;
 import aloha.mapper.BoardMapper;
+import aloha.mapper.FileMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +29,9 @@ public class BoardServiceImpl implements BoardService{
     // => 제어의 역전 => mapper 뒤에 객체를 선언하지 않아도 됨
     @Autowired
     private BoardMapper mapper;
+
+    @Autowired
+    private FileMapper fileMapper;
 
     @Override
     public List<Board> list() throws Exception {
@@ -93,7 +97,7 @@ public class BoardServiceImpl implements BoardService{
             List<Files> fileList = uploadFiles(file);
             // DB 파일 경로 등록
             for (Files uploadFile: fileList) {
-                mapper.uploadFile(uploadFile);
+                fileMapper.uploadFile(uploadFile);
             }
             //            uploadFiles( file);
         }
@@ -118,6 +122,11 @@ public class BoardServiceImpl implements BoardService{
     @Override
     public int count() throws Exception {
         return mapper.count();
+    }
+
+    @Override
+    public List<Files> fileList(Files files) throws Exception {
+        return mapper.fileList(files);
     }
 
     public List<Files> uploadFiles(MultipartFile[] files) throws Exception{

@@ -1,10 +1,8 @@
 package aloha.controller;
 
-import aloha.domain.Board;
-import aloha.domain.BoardDTO;
-import aloha.domain.Option;
-import aloha.domain.Page;
+import aloha.domain.*;
 import aloha.service.BoardService;
+import aloha.service.FileService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import lombok.extern.slf4j.XSlf4j;
@@ -24,6 +22,8 @@ public class BoardController {
     @Autowired
     private BoardService service;
 
+    @Autowired
+    private FileService fileservice;
     // 게시글 목록
     // @RequestMapping(value = "/board/list", method= RequestMethod.GET)
     @GetMapping("/board/list")
@@ -83,10 +83,15 @@ public class BoardController {
 
     // 게시글 읽기 - 화면
     @GetMapping("/board/read")
-    public String read(Model model, @RequestParam("boardNo") int boardNo) throws Exception {
+    public String read(Model model, @RequestParam("boardNo") int boardNo, Files files) throws Exception {
 
         Board board = service.read(boardNo);
         model.addAttribute("board", board);
+
+        files.setParentNo(boardNo);
+        files.setParentTable("board");
+        List<Files> fileList =  fileservice.fileList(files);
+        model.addAttribute("fileList", fileList);
 
         return "board/read";
     }
