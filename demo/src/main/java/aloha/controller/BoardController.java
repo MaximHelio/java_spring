@@ -97,10 +97,15 @@ public class BoardController {
     }
     // 게시글 수정 - 화면
     @GetMapping("/board/update")
-    public String update(Model model, int boardNo) throws Exception {
+    public String update(Model model, int boardNo, Files files) throws Exception {
 
         Board board = service.read(boardNo);
         model.addAttribute("board", board);
+
+        files.setParentNo(boardNo);
+        files.setParentTable("board");
+        List<Files> fileList =  fileservice.fileList(files);
+        model.addAttribute("fileList", fileList);
 
         return "board/update";
     }

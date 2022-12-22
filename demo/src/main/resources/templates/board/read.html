@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/style.css">
     <script>
+        let boardTitle = "[[${board.title}]]"
+
         $(function() {
             let form = $('#board')
             // 수정 버튼 클릭 이벤트
@@ -26,6 +28,67 @@
             $('#btnList').on('click', function(){
 
                 self.location = "/board/list"
+            })
+
+            let chkFileNoList = []
+            // 파일 클릭 이벤트
+            $('.chk-file').on('click', function(){
+                let fileNo = $(this).attr('data')
+
+                // 체크된 체크박스 요소만 fileList에 가져오기
+                let fileList = $('.chk-file:checked')
+                console.log(fileList.length);
+                if( fileList.length >= 1 ){
+                    $('#list-select-down').removeClass('d-none')
+                }else{
+                    $('#list-select-down').addClass('d-none')
+                }
+
+                chkFileNoList = []
+                fileList.each(function(i){
+                        chkFileNoList.push( $(fileList[i]).attr('data') )
+                })
+                console.log(chkFileNoList);
+                // console.log(fileNoList);
+            })
+            $('#btn-select-down').on('click', function(){
+                // 비동기 요청
+                $.ajax({
+                    url     : '/file/zipDownload/select/board?title=' + boardTitle,
+                    type    : 'get',
+                    xhrFields: {
+                        responseType: "blob",
+                    },
+                    data    : {
+                        'fileNoList' : chkFileNoList,
+                    },
+                    traditional : true,
+                    success : function(data, status, xhr) {
+                        // CLOB: 대용량 데이터
+                        // BLOB:
+                        // LOB
+                        // console.log(data)
+                        // let blob = new Blob([data])
+                        // console.log(blob)
+
+                        let disposition = xhr.getResponseHeader('Content-Disposition');
+                        let filename;
+
+                        if (disposition && disposition.indexOf('attachment') !== -1) {
+                            let filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                            let matches = filenameRegex.exec(disposition);
+                            if (matches != null && matches[1]) filename = matches[1].replace(/['"]/g, '');
+                        }
+
+                        let link = document.createElement('a');
+                        link.href = window.URL.createObjectURL(data);
+                        link.download = filename + '.zip';
+                        link.click();
+                    },
+                    error   : function(error) {
+                    }
+                })
+
             })
         })
     </script>
@@ -116,7 +179,7 @@
                         <ul class="list-group">
                             <th:block th:each="file : ${fileList}">
                                 <li class="list-group-item">
-                                    <input class="" th:data="${file.fileNo}"
+                                    <input class="chk-file" th:data="${file.fileNo}"
                                            type="checkbox" value="" th:id="|file-no-${file.fileNo}|">
                                     <label class="" th:for="|file-no-${file.fileNo}|">
                                         <span th:text="${file.fileName}"></span>
@@ -125,6 +188,13 @@
                                     </label>
                                 </li>
                             </th:block>
+
+                            <li class="list-group-item" th:if="!${#lists.isEmpty(fileList)}">
+                                <a th:href="|/file/zipDownload/board/${board.boardNo}?title=${board.title}|">전체 다운로드</a>
+                            </li>
+                            <li class="list-group-item d-none" id="list-select-down">
+                                <a href="javascript:;" id="btn-select-down">선택 다운로드</a>
+                            </li>
                         </ul>
                     </td>
                 </tr>

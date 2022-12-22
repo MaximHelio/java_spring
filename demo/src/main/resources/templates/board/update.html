@@ -8,6 +8,7 @@
     <title>게시글 수정</title>
     <script src="/js/jquery-3.6.1.min.js"></script>
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="/css/style.css">
     <script>
         $(function() {
@@ -107,6 +108,29 @@
                     <td>내용</td>
                     <td>
                         <textarea name="content" cols="80" rows="20" th:text="${board.content}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>파일</td>
+                    <td>
+                        <ul class="list-group">
+                            <th:block th:each="file : ${fileList}">
+                                <li class="list-group-item">
+                                    <input class="" th:data="${file.fileNo}"
+                                           type="checkbox" value="" th:id="|file-no-${file.fileNo}|">
+                                    <label class="" th:for="|file-no-${file.fileNo}|">
+                                        <span th:text="${file.fileName}"></span>
+                                        <!--표현식이랑 문자열 같이 섞으려면 바| 기호 안에다 넣어야 함 -->
+                                        <a th:href="|/file/download/${file.fileNo}|">다운로드</a>
+                                    </label>
+                                    <span class="btn text-danger material-symbols-outlined btn-remove"
+                                          th:data="${file.fileNo}">close</span>
+                                </li>
+                            </th:block>
+                            <li class="list-group-item" th:if="!${#lists.isEmpty(fileList)}">
+                                <a th:href="|/file/zipDownload/board/${board.boardNo}?title=${board.title}|">전체 다운로드</a>
+                            </li>
+                        </ul>
                     </td>
                 </tr>
             </table>
