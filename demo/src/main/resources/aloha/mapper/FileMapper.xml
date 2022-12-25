@@ -25,4 +25,21 @@
         FROM files
         WHERE file_no = #{fileNo}
     </select>
+    <!-- 파일 삭제-->
+    <delete id="delete">
+        DELETE FROM files
+        WHERE file_no = #{fileNo}
+    </delete>
+    <!--파일 선택 목록 삭제-->
+    <delete id="deleteSelectList">
+        DELETE FROM files
+        WHERE file_no IN ( #{fileNoList} )
+    </delete>
+    <!--파일 선택 목록-->
+    <select id="fileSelectList" resultType="Files">
+        SELECT *
+        FROM files
+        WHERE file_no IN ( ${fileNoList} )
+    </select>
+
 </mapper>

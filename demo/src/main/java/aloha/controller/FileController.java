@@ -10,16 +10,10 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpRequest;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -256,6 +250,34 @@ public class FileController {
 
 
         return null;
+    }
+
+    // 파일 삭제
+    // /file/19
+    @DeleteMapping("/{fileNo}")
+    public ResponseEntity<String> fileDelete(HttpServletRequest request, HttpServletResponse response
+                                            , @PathVariable("fileNo") int fileNo) throws Exception{
+
+        int result = fileService.delete(fileNo);
+        if(result > 0){
+            return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+        }
+        return new ResponseEntity<String>("FAIL", HttpStatus.OK);
+    }
+    // 파일 선택 삭제
+    // /file
+    @DeleteMapping("")
+    public ResponseEntity<String> fileSelectDelete(HttpServletRequest request, HttpServletResponse response
+                                                    ,String fileNoList) throws Exception{
+
+        log.info("fileNoList: " + fileNoList);
+
+        String result = fileService.deleteSelectList(fileNoList);
+
+        if( !result.equals("") ){
+            return new ResponseEntity<String>(result, HttpStatus.OK);
+        }
+        return new ResponseEntity<String>("FAIL", HttpStatus.OK);
     }
 
 }

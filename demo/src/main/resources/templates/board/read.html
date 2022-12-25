@@ -62,7 +62,9 @@
                     data    : {
                         'fileNoList' : chkFileNoList,
                     },
+                    // chkFileNoList의 배열로 선택다운로드 메서드에 매핑이 되기 위함
                     traditional : true,
+
                     success : function(data, status, xhr) {
                         // CLOB: 대용량 데이터
                         // BLOB:
@@ -78,6 +80,7 @@
                             let filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
                             let matches = filenameRegex.exec(disposition);
                             if (matches != null && matches[1]) filename = matches[1].replace(/['"]/g, '');
+                            filename = decodeURI(filename)
                         }
 
                         let link = document.createElement('a');
@@ -184,16 +187,16 @@
                                     <label class="" th:for="|file-no-${file.fileNo}|">
                                         <span th:text="${file.fileName}"></span>
                                         <!--표현식이랑 문자열 같이 섞으려면 바| 기호 안에다 넣어야 함 -->
-                                        <a th:href="|/file/download/${file.fileNo}|">다운로드</a>
+                                        <a th:href="|/file/download/${file.fileNo}|" class="btn btn-success">다운로드</a>
                                     </label>
                                 </li>
                             </th:block>
 
                             <li class="list-group-item" th:if="!${#lists.isEmpty(fileList)}">
-                                <a th:href="|/file/zipDownload/board/${board.boardNo}?title=${board.title}|">전체 다운로드</a>
+                                <a th:href="|/file/zipDownload/board/${board.boardNo}?title=${board.title}|" class="btn btn-success">전체 다운로드</a>
                             </li>
                             <li class="list-group-item d-none" id="list-select-down">
-                                <a href="javascript:;" id="btn-select-down">선택 다운로드</a>
+                                <a href="javascript:;" id="btn-select-down" class="btn btn-primary">선택 다운로드</a>
                             </li>
                         </ul>
                     </td>
