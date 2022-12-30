@@ -2,6 +2,7 @@ package aloha.controller;
 
 import aloha.domain.Files;
 import aloha.service.FileService;
+import aloha.utils.MediaUtils;
 import lombok.extern.slf4j.Slf4j;
 //import org.apache.tomcat.util.http.fileupload.FileItem;
 //import org.apache.tomcat.util.http.fileupload.IOUtils;
@@ -21,10 +22,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -278,6 +276,51 @@ public class FileController {
             return new ResponseEntity<String>(result, HttpStatus.OK);
         }
         return new ResponseEntity<String>("FAIL", HttpStatus.OK);
+    }
+
+    //썸네일 보여주기
+    @ResponseBody
+    @RequestMapping("/img/{fileNo}")
+    public ResponseEntity<byte[]> displayFile(@PathVariable int fileNo) throws Exception {
+        // 파일 인풋스트림 만들고, 경로 조회
+        InputStream in = null;
+        ResponseEntity<byte[]> entity = null;
+
+        String filePath = fileService.read(fileNo).getFilePath();
+        log.info("FILE NAME: " + filePath);
+
+        try {
+            String formatName = filePath.substring(filePath.lastIndexOf(".") + 1); // 파일 확장자
+            log.info("FILE FORMAT: " + formatName);
+
+            String mType = MediaUtils.getMediaType(formatName);
+
+            HttpHeaders headers = new HttpHeaders();
+
+            in = new FileInputStream(filePath);
+
+            if( mType != null) {
+                headers.add("Content-Type", mType); // image/gif,  image/ jpg , image/png, image/webp
+                entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
+            } else {
+                filePath = filePath.substring(filePath.lastIndexOf("_") + 1);    // UID_강아지.png -> 강아지.png
+                headers.setContentType(MediaType.APPLICATION_OCTET_STREAM); // 일반 바이너리 파일의 컨텐츠 타입이라 세팅해줌
+                // 다운로드 파일명이 아래와 같다
+//                headers.add("Content-Disposition", "attachment; filename=\"" + new String(filePath.getBytes("UTF-8"), "ISO-8859") + "\"");
+//                in = new FileInputStream("/img/contract.png");
+                // applicationproperties 에 불러놓고 써도 됨
+                in = new FileInputStream("C:\\aloha_java_spring\\demo\\src\\main\\resources\\static\\img\\contract.png");
+                entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
+            }
+            // IOUtils -> byteArray : input스트림으로 가져온 fileData를 ByteArray로 변환해줌
+
+        }catch(Exception e){
+            e.printStackTrace();
+            entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
+        }finally{
+            in.close();
+        }
+        return entity;
     }
 
 }
