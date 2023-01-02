@@ -33,6 +33,9 @@ public class BoardServiceImpl implements BoardService{
     @Autowired
     private FileMapper fileMapper;
 
+    @Autowired
+    private FileService fileService;
+
     @Override
     public List<Board> list() throws Exception {
         return mapper.list(); // throws Exception이니 또 떠넘김
@@ -116,6 +119,22 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     public int delete(int boardNo) throws Exception {
+
+        // 게시글 첨부파일들 삭제
+        // 1. 첨부파일 목록 조회
+        Files file = new Files();
+        file.setParentTable("board");
+        file.setParentNo(boardNo);
+
+        List<Files> fileList =  fileMapper.fileList(file);
+
+        // 2. 첨부파일 삭제 요청
+        for (Files files: fileList) {
+            int fileNo = files.getFileNo();
+            fileService.delete(fileNo);
+        }
+
+        // 게시글 삭제
         return mapper.delete(boardNo);
     }
 

@@ -125,6 +125,7 @@ public class BoardController {
     // 게시글 삭제 - 처리
     @PostMapping("/board/delete")
     public String delete(Model model, int boardNo) throws Exception {
+
         int result = service.delete(boardNo);
 
         if(result > 0){

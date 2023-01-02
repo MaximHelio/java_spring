@@ -3,6 +3,7 @@ package aloha.controller;
 import aloha.domain.Files;
 import aloha.service.FileService;
 import aloha.utils.MediaUtils;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.extern.slf4j.Slf4j;
 //import org.apache.tomcat.util.http.fileupload.FileItem;
 //import org.apache.tomcat.util.http.fileupload.IOUtils;
@@ -25,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
@@ -321,6 +323,28 @@ public class FileController {
             in.close();
         }
         return entity;
+    }
+
+    // AJAX post 파일 삭제
+    @PostMapping("/delete")
+    public ResponseEntity<Map<String, Boolean>> fileDelete(int fileNo) throws Exception{
+
+        // log.info("fileNo: "+ fileNo);
+        // HttpHeaders headers = new HttpHeaders();
+        // headers.add("Access-Control-Allow-Methods", "POST, DELETE");
+
+        // response.addHeader("Access-Control-Allow-Methods", "POST, DELETE"); // 지원할 수 있는 메서드 방식
+        int result = fileService.delete(fileNo);
+
+        HashMap<String, Boolean> map = new HashMap<String, Boolean>();
+
+        if( result > 0){
+//            map.put("error", false);
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        }
+        // 에러가 났을 때만
+        map.put("error", true);
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
 }

@@ -58,13 +58,15 @@
                     showUpload: false,
                     showDownload: true,
                     showZoom: true,
-                    showDrag: false,
+                    showDrag: true,
                 },
                 removeIcon: "<i class='fa fa-times'></i>",
                 removeLabel: "전체 취소",
 
                 initialPreview: previewList,
                 initialPreviewConfig: configList,
+                initialPreviewShowDelete: false,    // 프리뷰 삭제 아이콘
+                // initialPreviewCount: 1,
                 initialPreviewDownloadUrl: '/file/download/{key}'
             });
             // 수정 버튼 클릭 이벤트

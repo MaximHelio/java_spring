@@ -3,6 +3,7 @@ package aloha.service;
 import aloha.domain.Files;
 import aloha.mapper.FileMapper;
 import aloha.mapper.FileMapper;
+import aloha.utils.FileUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,10 @@ public class FileServiceImpl implements FileService{
 
     @Autowired
     private FileMapper fileMapper;
+
+    @Autowired
+    private FileUtils fileUtils;
+
     @Override
     public int uploadFile(Files uploadFile) {
         return fileMapper.uploadFile(uploadFile);
@@ -33,7 +38,15 @@ public class FileServiceImpl implements FileService{
 
     @Override
     public int delete(int fileNo) throws Exception {
-        return fileMapper.delete(fileNo);
+
+        // 실제 파일 삭제
+        boolean result = deleteFile(fileNo);
+
+        // DB 파일 데이터 삭제
+        if(result){
+            return fileMapper.delete(fileNo);
+        }
+        return 0;
     }
 
     @Override
@@ -52,7 +65,7 @@ public class FileServiceImpl implements FileService{
             Files file = fileList.get(i);
             String filePath = file.getFilePath();
             int fileNo = file.getFileNo();
-            boolean deleteYn = deleteFile(filePath);
+            boolean deleteYn = fileUtils.deleteFile(filePath);
 
             if( deleteYn ){
                 // DB의 파일 데이터를 삭제, 삭제된 행의 개수 누적해줌
@@ -73,26 +86,9 @@ public class FileServiceImpl implements FileService{
         return fileMapper.fileSelectList(fileNoList);
     }
 
-    // 파일 삭제
-    public boolean deleteFile(String filePath) throws Exception{
-
-        File file = new File(filePath);
-        // 실제로 존재하는지 확인해줘야함
-        if( file.exists()) {
-            // delete() : 파일 삭제
-            //            성공 --> true
-            //            실패 --> false
-            if(file.delete()){
-                log.info("파일 삭제 성공!!");
-                log.info("삭제된 파일: " + filePath);
-                return true;
-            } else{
-                log.info("파일 삭제 실패!!");
-                log.info("잘못된 경로 : " + filePath);
-                log.info("파일이 존재하지 않습니다.");
-            }
-        }
-
-        return false;
+    // 파일 삭제 오버로딩
+    public boolean deleteFile(int fileNo) throws Exception{
+        String filePath = fileMapper.read(fileNo).getFilePath();
+        return fileUtils.deleteFile(filePath);
     }
 }

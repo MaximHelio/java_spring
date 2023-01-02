@@ -8,13 +8,66 @@
     <title>게시글 수정</title>
     <script src="/js/jquery-3.6.1.min.js"></script>
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" crossorigin="anonymous"/>
+    <link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.2/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="/css/style.css">
-    <script>
-        let boardTitle = "[[${board.title}]]"
-        let chkFileNoList = []
+
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.2/js/plugins/buffer.min.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.2/js/plugins/filetype.min.js" type="text/javascript"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.2/js/plugins/piexif.min.js" type="text/javascript"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.2/js/plugins/sortable.min.js" type="text/javascript"></script>
+
+    <script src="/js/jquery-3.6.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.2/js/fileinput.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.2/js/locales/kr.js"></script>
+    <script th:inline="javascript">
+        let boardTitle = [[${board.title}]]
+        let fileList = [[${fileList}]]
+        let previewList = []        // 파일 넘버 넣어줌
+        let configList = []
+
         $(function() {
             let form = $('#board')
+
+            initiatePreviewList()
+            initiateConfigList()
+
+            $.fn.fileinputBsVersion = "3.3.7";
+            $("#input-fileupload").fileinput({
+                language: "kr",
+                theme: "",
+                uploadUrl: "#",
+                deleteUrl: "#",
+                initialPreviewAsData: true, //upload한 걸 띄우는 것
+                overwriteInitial: true,
+                dropZoneTitle: '<div class="upload-area"><i class="far fa-images"></i><p>파일을 드래그 하여 여기에 넣어주세요</p> <div> <button class="btn btn-primary">파일 찾기</button> </div></div>',
+                dropZoneClickTitle: "",
+                browseOnZoneClick: false,
+                showRemove: false,
+                showUpload: false,
+                showZoom: true,
+                showCaption: false,
+                showBrowse: false,
+                showClose: false,
+                fileActionSettings: {
+                    showRotate: false,
+                    showUpload: false,
+                    showDownload: true,
+                    showZoom: true,
+                    showDrag: false,
+                },
+                removeIcon: "<i class='fa fa-times'></i>",
+                removeLabel: "전체 취소",
+
+                initialPreview: previewList,
+                initialPreviewConfig: configList,   // 설정정보
+                initialPreviewDownloadUrl: '/file/download/{key}'
+            });
             // 수정 버튼 클릭 이벤트
             $('#btnUpdate').on('click', function(){
                 form.attr('action', '/board/update')
@@ -148,6 +201,31 @@
             }
         }
 
+        // 프리뷰 리스트 세팅
+        function initiatePreviewList(){
+            $(fileList).each(function(i){
+                console.log(fileList[i].fileNo)
+                // ['/file/img/10', 'file/img/20']
+                previewList.push("/file/img/" + fileList[i].fileNo)
+            })
+        }
+        // 프리뷰 설정 리스트 세팅
+        function initiateConfigList(){
+
+            $(fileList).each(function(i){
+                console.log(fileList[i].fileNo)
+
+                let fileConfig = {
+                    'caption' : fileList[i].fileName,
+                    'size' : fileList[i].fileSize,
+                    'key' : fileList[i].fileNo,
+                    'url' : '/file/delete', // 기존엔 AJAX POST로 삭제 요청
+                    'extra': {fileNo : fileList[i].fileNo},
+
+                }
+                configList.push(fileConfig)
+            })
+        }
     </script>
 </head>
 <body>
@@ -233,6 +311,18 @@
                 <tr>
                     <td>파일</td>
                     <td>
+                        <!-- input-fileupload 등 파일업로드 기능 활성화-->
+                        <section class="bg-diffrent">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-xl-12">
+                                        <div class="file-upload-contain" >
+                                            <input id="input-fileupload" type="file" class="form-control"  name="file" accept=".jpg,.gif,.png" multiple />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
                         <ul class="list-group">
                             <th:block th:each="file : ${fileList}">
                                 <li class="list-group-item file-list" th:data="${file.fileNo}">
