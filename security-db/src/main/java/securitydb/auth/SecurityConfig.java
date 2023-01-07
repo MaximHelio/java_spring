@@ -1,4 +1,4 @@
-package securitycustom.auth;
+package java.securitydb.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -7,8 +7,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import securitycustom.utils.EncodeUtils;
+
 
 @Configuration          // 해당 클래스를 스프링 설정하는 빈으로 등록
 @EnableWebSecurity      // 해당 클래스를 시큐리티 설정 클래스로 지정. 스프링 시큐리티 기능을 활성화
@@ -40,25 +39,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();                  // 시큐리티가 CSRF 공격에 대한 보호 설정을 기본으로 해줌
     }
 
-    @Autowired
-    public void configureMemory(AuthenticationManagerBuilder auth) throws Exception{
-        // 인메모리 방식으로 인증 처리
-        auth.inMemoryAuthentication()
-            .passwordEncoder( EncodeUtils.passWordEncoder() )
-            // ID : user, PW : 123456, 권한 : ROLE_USER 로 메모리에 저장 > 서버가 꺼지면 꺼짐
-            // noop : 암호화를 안했는데 암호화됐다라고 인식해달라는 식별 기호
-            // password("{noop}123456") : 실제로는 암호화하지 않고, 암호화된 것처럼 인식하도록 지정
-            // bcrypt : bCrypt 암호화 방식으로 암호화 하여 인증
-            .withUser("user").password( EncodeUtils.passWordEncoder().encode("123456")).roles("USER")
-            .and()
-            // ID : admin, PW : 123456, 권한 : ROLE_ADMIN 으로 메모리에 저장
-            .withUser("admin").password(EncodeUtils.passWordEncoder().encode("123456")).roles("ADMIN");
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+
+        // JDBC 인증을 위해 필요한 정보 (이걸 알려줘야 시큐리티가 접속 가능)
+        // - 데이터 소스 (DB 정보 : 호스트URL, 접속에 필요한 id/pw)
+        // - ID/PW 인식할 수 있는 쿼리
+        // - 권한을 가져올 쿼리를 인식
+        // - 패스워드에 대한 암호화 방식
+        auth.jdbcAuthentication(); // 인메모리 방식 대신 jdbc(DB)통한 인증 수행
+
     }
-    // 스프링 시큐리티 설정 파일 내에서 빈 등록을 하면,
-    // 순환참조가 일어나서 에러남 => 별도의 클래스에서 빈 등록을 해주어야 함.
-    // 스프링 시큐리티 기본 암호화 방식
-//    @Bean // 메서드에서 반환하는 객체를 스프링 컨테이너에 등록해줌 > 스프링 시작시, 해당 인스턴스가 필요한 시점에 컨테이너에서 꺼내옴
-//    public BCryptPasswordEncoder passwordEncoder(){
-//        return new BCryptPasswordEncoder();
-//    }
 }
